@@ -1,3 +1,8 @@
-import axios from 'axios'
-import qs from 'qs'
-import router from '../router'
+import ajax from './ajax'
+
+
+// 获取顶部导航列表
+export const getNavList = () => ajax({
+    url:'/cateNavDatas'
+})
+

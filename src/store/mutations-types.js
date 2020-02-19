@@ -1,0 +1,1 @@
+export const SAVE_NAVLIST = 'save_navlist'
