@@ -4,7 +4,7 @@
         <img src="../../common/images/logo.webp" alt="">
         <div class="search">
           <i class="iconfont icon-sousuo"></i>
-           <span>搜索商品, 共20261款好物</span>
+           <span @click="toSearchList">搜索商品, 共20261款好物</span>
         </div>
         <div class="login">登录</div>
     </div>
@@ -25,41 +25,15 @@
          </div>
        </div>
        <ul class="maskList">
-           <li>推荐</li>
-           <li>居家生活</li>
-           <li>服饰鞋包</li>
-           <li>美食酒水</li>
-           <li>个护清洁</li>
-           <li>母婴亲子</li>
-           <li>运动旅行</li>
-           <li>数码家电</li>
-           <li>全球特色</li>
+           <li v-for="(navItem,index) in categoryL1List" :key="index">{{navItem.name}}</li>
        </ul>
 
      </div>
       <!-- 轮播图 -->
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/01.webp" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/2.webp" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/3.webp" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/4.webp" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/5.webp" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/6.webp" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="../../common/images/swiper/7.webp" alt="">
+          <div class="swiper-slide" v-for="(focusItem,index) in indexList.focusList" :key="index">
+            <img :src="focusItem.picUrl" alt="">
           </div>
         </div> 
         <div class="swiper-pagination">
@@ -68,65 +42,20 @@
       </div>
       <!-- 列表 -->
       <div class="bottomList">
-        <div>
-          <i class="iconfont icon-wangyi"></i>
-          <span>网易自营品牌</span>
-        </div>
-        <div>
-          <i class="iconfont icon-img_wuyoutuikuanx"></i>
-          <span>30天无忧退货</span>
-        </div>
-        <div>
-          <i class="iconfont icon-tuikuan"></i>
-          <span>48小时极速退款</span>
+        <div v-for="(policyItem,index) in indexList.policyDescList" :key="index">
+          <!-- <i>{{policyItem.icon}}</i> -->
+          <img :src="policyItem.icon" alt="">
+          <span>{{policyItem.desc}}</span>
         </div>
       </div>
 
       <!-- 商品列表 -->
       <div class="shopListContainer">
         <div class="shopList">
-          <ul class="shoplis">
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-          </ul>
-           <ul class="shoplis">
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
-            </li>
-            <li>
-              <img src="../../common/images/swiper/8.png" alt="">
-              <span>新品首发</span>
+          <ul class="shoplis" v-if="indexList.kingKongModule">
+            <li v-for="(Item,index) in indexList.kingKongModule.kingKongList" :key="index">
+              <img :src="Item.picUrl" alt="">
+              <span>{{Item.text}}</span>
             </li>
           </ul>
         </div>
@@ -172,11 +101,11 @@
             <span>新人专享礼包</span>
             <img src="../../common/images/zhijian.png" alt="">
           </div>
-          <div class="rightContainer">
-            <div class="top1">
-              <span>福利社</span>
-              <span class="today">今日特价</span>
-              <img src="../../common/images/saoba.webp" alt="">
+          <div class="rightContainer" v-if="indexList.indexActivityModule">
+            <div class="top1" v-for="(newcomersItem,index) in indexList.indexActivityModule.slice(0,1)" :key="index">
+              <span>{{newcomersItem.title}}</span>
+              <span class="today">{{newcomersItem.subTitle}}</span>
+              <img :src="newcomersItem.picUrl" alt="">
             </div>
             <div class="bottom1">
               <span>新人拼团</span>
@@ -187,45 +116,71 @@
       </div>
 
       <!-- 类目热销榜 -->
-          <div class="demand">
-             <div class="text">类目热销榜</div>
-             <div class="demandTop">
-                <div class="demL">
-                  <span class="rexiao">热销榜</span>
-                  <span class="bLine"></span>
-                  <img src="../../common/images/rexiao.webp" alt="">
-                </div>
-                <div class="demR">
-                  <span>好评榜</span>
-                  <span></span>
-                  <img src="../../common/images/rexiao.webp" alt="">
-                </div>
-                <div class="demandList">
-                  <ul>
-                    <li>
-                      <span>美食酒水榜</span>
-                      <img src="../../common/images/rexiao.webp" alt="">
-                    </li>
-                    <li>
-                      <span>美食酒水榜</span>
-                      <img src="../../common/images/rexiao.webp" alt="">
-                    </li>
-                    <li>
-                      <span>美食酒水榜</span>
-                      <img src="../../common/images/rexiao.webp" alt="">
-                    </li>
-                    <li>
-                      <span>美食酒水榜</span>
-                      <img src="../../common/images/rexiao.webp" alt="">
-                    </li>
-                    <li>
-                      <span>美食酒水榜</span>
-                      <img src="../../common/images/rexiao.webp" alt="">
-                    </li>
-                  </ul>
-                </div>
+          <Demand/>
+    
+        
+
+         <!-- 新品首发 -->
+         <div class="newGoodsContainer">
+           <div class="newGoodsTop">
+             <span>新品首发</span>
+             <div class="more">
+               <span>更多</span>
+               <i class="iconfont icon-right"></i>
              </div>
-          </div>
+           </div>
+           <div class="newGoodsBottom">
+             <div class="newGoodsList">
+               <li v-for="(newItem,index) in indexList.newItemList" :key="index">
+                 <img :src="newItem.listPicUrl" alt="">
+                 <div class="newGoodsText">{{newItem.name}}</div>
+                 <span class="newGoodsPrice">￥{{newItem.retailPrice}}</span>
+                 <span class="newGoodsT">{{newItem.itemTagList[0].name}}</span>
+               </li>
+             </div>
+           </div>
+         </div>
+
+         <!-- 断货补单网 -->
+         <div class="replenishment">
+           <ul class="replenishmentList">
+             <li v-for="(replenishItem,index) in indexList.sceneLightShoppingGuideModule" :key="index">
+               <span>{{replenishItem.styleItem.title}}</span>
+               <span class="title">{{replenishItem.styleItem.desc}}</span>
+               <div>
+                 <img :src="replenishItem.styleItem.picUrlList[0]" alt="">
+                 <img :src="replenishItem.styleItem.picUrlList[1]" alt="">
+               </div>
+             </li>
+           </ul>
+         </div> 
+
+         <!-- 尾部 -->
+         <div class="fotter">
+           <div>
+             <div class="footerT">
+             <div class="leftApp div">
+             <span>下载APP</span>
+             
+           </div>
+            <div class="div RApp">电脑版</div>
+           
+           </div>
+             <div class="footerText">
+               <span>
+               网易公司版权所有 © 1997-2020
+               </span>
+               <br/>
+               <span>
+               食品经营许可证：JY13301080111719
+               </span>
+             </div>
+           </div>
+           
+         </div> 
+
+
+
 
 
   </div>
@@ -236,7 +191,11 @@ import BScorll from 'better-scroll'
 import {mapState} from 'vuex'
 import Swiper from 'swiper'
 import 'swiper/css/swiper.min.css'
+import Demand from '../../components/Demand/Demand'
   export default {
+    components:{
+      Demand
+    },
     data() {
       return {
         isShowMask:false
@@ -245,13 +204,8 @@ import 'swiper/css/swiper.min.css'
     mounted() {
        // 分发
       this.$store.dispatch('getNavListAction')
-       new Swiper('.swiper-container',{
-            loop: true,
-            autoplay:true,
-            pagination:{
-              el:".swiper-pagination"
-            }
-          })   
+      this.$store.dispatch('getIndexListAction')
+      
           
           new BScorll('.listContainer',{
             scrollX:true
@@ -265,14 +219,31 @@ import 'swiper/css/swiper.min.css'
        },
        handleBack(){
          this.isShowMask = !this.isShowMask
-       }
+       },
+         toSearchList(){
+          this.$router.push('/SearchList')
+         }
      },
      computed: {
        ...mapState({
         //  获取数据
-         categoryL1List:state =>state.categoryL1List
-       })
+         categoryL1List:state =>state.categoryL1List,
+         indexList:state =>state.indexList
+       }),
      },
+     watch:{
+       indexList(){
+         this.$nextTick(()=>{
+          new Swiper('.swiper-container',{
+                      loop: true,
+                      autoplay:true,
+                      pagination:{
+                        el:".swiper-pagination"
+                      }
+                    })   
+       })
+       }
+     }
   }
 </script>
 
@@ -433,9 +404,9 @@ import 'swiper/css/swiper.min.css'
   height 36px
   display flex
   align-items center
- i 
-  font-size 32px
-  color #dd1a21
+ img  
+  width 32px
+  height 32px
  span  
   font-size 24px
   padding-left 8px
@@ -443,14 +414,14 @@ import 'swiper/css/swiper.min.css'
 .shopListContainer
  width 750px
  height 373px
-
  .shopList
   width 750px
   height 341px  
   .shoplis
-    display flex 
+    display flex
+    flex-wrap wrap 
     li
-     width 20%
+     width 110px
      margin 10px 20px
     img  
       width 110px
@@ -595,32 +566,146 @@ import 'swiper/css/swiper.min.css'
      border-radius 6px
      margin-top 5px
 
-.demand
- width 750px
- height 100px
- line-height 100px
- .text
-  font-size 32px
-  color #333
-  margin-left 30px
- .demandTop
-  width 750px
-  height 610px
-  padding 0 20px 20px 30px
+.newGoodsContainer
+ width 100%
+ height 942px
+ background #eee
+ .newGoodsTop
+  width 100%
+  height 100px
+  background #ffffff
+  padding 0 30px
   box-sizing border-box
-  .demL
-   width 340px
-   height 200px
-   background #f9f3e4
-   span 
-    font-size 28px
-    color #333
-   .bLine
-    width 48px
-    height 4px
+  line-height 100px
+  span 
+   font-size 32px
+   overflow hidden
+  .more
+   display inline-block
+   float right
+   font-size 28px
+ .newGoodsBottom
+  width 750px
+  height 820px
+  background #fff
+  padding-left 10px
+  box-sizing border-box
+  overflow hidden
+  .newGoodsList
+   width 740px
+   height 820px
+   padding-bottom 13px
+   box-sizing border-box
+   display flex
+   flex-wrap wrap
+   overflow hidden
+   li
+    margin-left 20px
+    margin-bottom 20px
+   img
+    width 216px
+    height 216px
+    background #f5f5f5
+   .newGoodsText
+    font-size 24px
     color #333
     display block
-    z-index 100
+    width 216px
+    height 68px
+    line-height 35px
+    margin-top 10px
+    overflow hidden
+   .newGoodsPrice
+    font-size 32px
+    color #dd1a21
+    display block
+    margin-left -5px
+    margin-top 10px
+    margin-bottom 12px
+   .newGoodsT
+    height 30px
+    border 1px solid #dd1a21
+    font-size 16px
+    line-height 30px
+    border-radius 30px
+    line-height 30px
+    margin-top 10px
+    padding 3px 5px
+    color #dd1a21
+
+
+.replenishment
+ width 750px
+ height 596px
+ background #eee
+ .replenishmentList
+  width 100%
+  height 576px
+  background #fff
+  padding 10px 30px
+  box-sizing border-box
+  li
+   width 340px
+   height 260px
+   background #f5f5f5
+   margin 4px 0 0 4px
+   padding 20px 0 0 20px
+   box-sizing border-box
+   float left
+   span
+    color #333
+    font-size 32px
+    display block
+    margin-left 10px
+    margin-bottom 10px
+   .title
+    font-size 24px
+    color #7f7f7f
+   div
+    display flex
+    img
+     width 150px
+     height 150px
+     margin-right 4px
+
+div
+ position relative
+ .footerT
+  width 750px
+  height 244px
+  background #333
+  padding 54px 20px 28px
+  box-sizing border-box
+  position relative
+  .div
+   width 172px
+   height 62px
+   color #fff
+   font-size 24px
+   border 1px solid #666
+   text-align center
+   line-height 62px
+   margin-bottom 36px
+   margin-left 50px
+  .RApp,.leftApp
+   float left
+  .leftApp
+   margin-left 150px
+ .footerText
+  color #999
+  display block
+  text-align center
+  position absolute
+  bottom 30px
+  left 168px
+  line-height 30px
+
+
+
+
+
+
+   
 
 
 
