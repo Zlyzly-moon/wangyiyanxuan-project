@@ -11,8 +11,7 @@
      <!-- 导航 -->
      <div class="listContainer">
        <ul class="navList">
-           <li>推荐</li>
-           <li v-for="(navItem,index) in categoryL1List" :key="index">{{navItem.name}}</li>
+           <li :class="{active:current===index}" @click="dianji(index)"  v-for="(navItem,index) in categoryL1List" :key="index">{{navItem.name}}</li>
       </ul>
      </div>
      <i class="iconfont icon-arrow-down" @click="handleButton"></i>
@@ -62,27 +61,26 @@
       </div>
 
       <!-- 宅家 -->
-      <div class="zaijiaContainer">
+      <div class="zaijiaContainer" v-if="indexList.bigPromotionModule">
         <div class="zaijiaTop">
-           <img src="../../common/images/zaijia.webp" alt="">  
+           <img :src="indexList.bigPromotionModule.floorList[0].cells[0].picUrl" alt="">  
+           <div class="zaijiaPrice">
+             <span>￥ 19.9</span>
+           </div>
         </div>
         <div class="zaijiaBottom">
           <div class="fangyi">
-            <img src="../../common/images/fangyi.gif" alt="">
+            <img :src="indexList.bigPromotionModule.floorList[1].cells[0].picUrl" alt="">
           </div>
           <div class="zaijiaList">
             <ul>
-            <li>
-              <img src="../../common/images/gaoxiao.webp" alt="">
+            <li v-for="(zaijiaItem,index) in indexList.bigPromotionModule.floorList[2].cells" :key="index">
+              <img :src="zaijiaItem.picUrl" alt="">
             </li>
-            <li>
-              <img src="../../common/images/gaoxiao.webp" alt="">
-            </li>
-            <li>
-              <img src="../../common/images/gaoxiao.webp" alt="">
-            </li>
-            <li>
-              <img src="../../common/images/gaoxiao.webp" alt="">
+          </ul>
+          <ul>
+            <li v-for="(zaijiaItem,index) in indexList.bigPromotionModule.floorList[3].cells" :key="index">
+              <img :src="zaijiaItem.picUrl" alt="">
             </li>
           </ul>
           </div>
@@ -90,7 +88,7 @@
       </div>
 
       <!-- 新人专享 -->
-      <div class="newcomersContainer">
+      <div class="newcomersContainer" v-if="indexList.indexActivityModule">
         <div class="comersTop">
           <span class="line1 line"></span>
           <span> 新人专享礼 </span>
@@ -101,15 +99,15 @@
             <span>新人专享礼包</span>
             <img src="../../common/images/zhijian.png" alt="">
           </div>
-          <div class="rightContainer" v-if="indexList.indexActivityModule">
+          <div class="rightContainer">
             <div class="top1" v-for="(newcomersItem,index) in indexList.indexActivityModule.slice(0,1)" :key="index">
               <span>{{newcomersItem.title}}</span>
               <span class="today">{{newcomersItem.subTitle}}</span>
               <img :src="newcomersItem.picUrl" alt="">
             </div>
             <div class="bottom1">
-              <span>新人拼团</span>
-              <span class="one">一元起包邮</span>
+              <span>{{indexList.indexActivityModule[1].title}}</span>
+              <span class="one">{{indexList.indexActivityModule[1].tag}}</span>
             </div>
           </div>
         </div>
@@ -198,7 +196,8 @@ import Demand from '../../components/Demand/Demand'
     },
     data() {
       return {
-        isShowMask:false
+        isShowMask:false,
+        current:0
       }
     },
     mounted() {
@@ -208,7 +207,8 @@ import Demand from '../../components/Demand/Demand'
       
           
           new BScorll('.listContainer',{
-            scrollX:true
+            scrollX:true,
+            click:true
           })
 
           
@@ -222,6 +222,9 @@ import Demand from '../../components/Demand/Demand'
        },
          toSearchList(){
           this.$router.push('/SearchList')
+         },
+         dianji(index){
+           this.current = index
          }
      },
      computed: {
@@ -314,10 +317,11 @@ import Demand from '../../components/Demand/Demand'
     font-weight 500 
     &:first-child
      margin-left 30px
-     color #dd1a21
     &:last-child
      margin-right 120px
-    &:first-child:after
+    &.active
+     color #dd1a21
+    &.active:after
       content ''
       position absolute
       left 0
@@ -441,6 +445,19 @@ import Demand from '../../components/Demand/Demand'
  .zaijiaTop
   width 100%
   height 240px
+  position relative
+  .zaijiaPrice
+   width 157px
+   height 32px
+   background #f48f18
+   font-size 20px
+   color #fff
+   text-align center
+   border-radius 30px
+   line-height 32px
+   position absolute
+   top 162px
+   left 80px
   img 
     width 100%
     height 100%

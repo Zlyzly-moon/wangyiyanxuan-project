@@ -21,7 +21,7 @@
     <div class="shopcart">
       <img src="../../common/images/gouwuche.webp" alt="">
       <span class="text">去添加点什么吧</span>
-      <div class="btn">
+      <div class="btn" @click="goLogin">
         <span>登录</span>
       </div>
     </div>
@@ -30,6 +30,11 @@
 
 <script type="text/ecmascript-6">
   export default {
+    methods: {
+      goLogin(){
+        this.$router.push('/login')
+      }
+    },
   }
 </script>
 

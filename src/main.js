@@ -4,6 +4,11 @@ import 'lib-flexible/flexible'
 import './veeValidate'
 import router from './router'
 import store from './store'
+import axios from 'axios'
+import * as API from  './api/index'
+Vue.prototype.$API = API
+
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 new Vue({

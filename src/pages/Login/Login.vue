@@ -12,16 +12,18 @@
     </div>
 
     <div class="loginContainer">
-        <input name="phone" v-validate="'required|phone'" class="input" type="text" placeholder="请输入手机号">
+        <input name="phone" v-model="phone" v-validate="'required|phone'" class="input" type="text" placeholder="请输入手机号">
         <span style="color: red;" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
         <input name="code" v-validate="'required|code'" class="inputEamil" type="text" placeholder="请输入短信验证码">
         <span style="color: red;" v-show="errors.has('code')">{{ errors.first('code') }}</span>
-        <div class="btnCode">获取验证码</div>
+        <div class="btnCode"
+         @click.prevent="getCode"
+        >获取验证码</div>
         <div class="textContainer">
             <span>遇到问题?</span>
             <span class="psd">使用密码验证码登录</span>
         </div>
-        <div class="btn">登录</div>
+        <div class="btn" @click="goProfile">登录</div>
         <div class="agree">
             <div class="box">
                 <img src="../../common/images/box.png" alt="">
@@ -42,11 +44,38 @@
 </template>
 
 <script type="text/ecmascript-6">
+
   export default {
+      data() {
+        return {
+          countTime:0,
+          phone:'',
+          code:'',
+        }
+      },
       methods: {
           goHome(){
               this.$router.push('/home')
-          }
+          },
+          goProfile(){
+            this.$router.push('/profile')
+          },
+          // 获取验证码
+          async getCode(){
+            this.countTime = 30
+            let id = setInterval(()=>{
+              this.countTime--
+              this.countTime === 0 && clearInterval(id)
+            },1000)
+
+            // 获取验证码
+            let result = await this.$API.sendCode({phone:this.phone})
+            if(result.code === 0){
+              alert('发送成功')
+            }else{
+              alert(result.msg)
+            }
+          },
       },
   }
 </script>

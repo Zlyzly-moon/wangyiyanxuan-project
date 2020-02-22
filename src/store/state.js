@@ -3,5 +3,7 @@ export default{
     categoryL1List:[],
     indexList:{},
     cateLists:[],
-    searchList:''
+    searchList:'',
+    buyList:[],
+    data:[]
 }

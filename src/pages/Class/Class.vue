@@ -9,51 +9,67 @@
     <div class="classBottom">
       <div class="navListContainer">
         <ul class="navList">
-          <li 
-          class="active" 
+          <li  
           v-for="(item,index) in categoryL1List" :key="index"
-          @click="handlePage"
+          @click="handlePage(index,item.id)"
+          :class="{active:current === index}"
           
           >{{item.name}}</li>
         </ul>
       </div>
-      <div class="navRight">
-        <div class="navTop">
-          <img src="../../common/images/fenlei.webp" alt="">
-        </div>
-        <div class="navBottom">
-          <ul>
-            <li>
-              <img src="../../common/images/tup.webp" alt="">
-              <span>{{}}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+      
+      <!-- 右侧页面 -->
+       <ClassRight :pageData='cateLists' :Listid='Listid'/>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {mapState} from 'vuex'
+  import ClassRight from '../Class/ClassRight.vue'
+  import BScroll from 'better-scroll'
   export default {
+    components:{
+         ClassRight
+    },
+    data() {
+      return {
+        current:0,
+        Listid:11
+      }
+    },
     mounted() {
       this.$store.dispatch('getNavListAction')
       this.$store.dispatch('getCateListAction')
+
+
+      
     },
     computed: {
       ...mapState({
         categoryL1List:state =>state.categoryL1List,
         cateLists:state =>state.cateLists,
+        
       })
     },
     methods: {
-      handlePage(){
-
+      handlePage(index,id){
+           this.current = index
+           this.Listid = id
       },
       toSearchList(){
           this.$router.push('/SearchList')
          }
+    },
+    watch: {
+       list(){
+        this.$nextTick(()=>{
+          new BScroll('.navListContainer',{
+          click:true,
+          scrollY:true,
+        })
+        })
+      }
     },
   }
 </script>
@@ -61,6 +77,7 @@
 <style  lang="stylus" rel="stylesheet/stylus">
 .classContainer
  width 100%
+ 
  .classTop
   width 750px
   height 88px
@@ -68,6 +85,8 @@
   box-sizing border-box
   position relative
   border-bottom 1px solid #eeeeee
+  z-index 200
+  background #fff
   .classSearch
    width 690px
    height 56px
@@ -82,12 +101,13 @@
     color #666
  .navListContainer
   width 162px
-  height 1120px
+  height 900px
   padding 40px 0
   box-sizing border-box
   border-right 2px solid #eeeeee
   text-align center
   float left 
+  margin-top 40px
   .navList
    li
     width 162px
@@ -96,6 +116,8 @@
     font-size 28px
     margin-bottom 40px
     position relative
+    &.active
+     color #dd1a21
     &.active:after
      content ''
      width 6px
@@ -104,33 +126,4 @@
      position absolute
      left 0
      top -10px
- .navRight
-  width 588px
-  padding 40px 20px 0 30px
-  box-sizing border-box
-  float right
-  .navTop
-   img 
-    width 528px
-    height 192px
-  .navBottom
-   ul
-    width 100%
-    display flex
-    flex-wrap wrap
-    li 
-     height 216px
-     width 144px
-     text-align center
-     margin-right 35px
-     img 
-      width 144px
-      height 144px
-     span 
-      width 144px
-      height 72px
-      color #333
-
-
-    
-</style>
+ </style>

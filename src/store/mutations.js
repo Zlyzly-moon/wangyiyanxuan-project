@@ -2,7 +2,9 @@ import {
     SAVE_NAVLIST,
     SAVE_INDEXLIST,
     SAVE_CATELISTS,
-    SAVE_SEARCHLIST
+    SAVE_SEARCHLIST,
+    SAVE_BUYLIST,
+    SAVE_PUBULIST
  } from './mutations-types'
  
  export default{
@@ -21,6 +23,14 @@ import {
     [SAVE_SEARCHLIST](state,searchItem){
         state.searchList = searchItem
     },  
+    [SAVE_BUYLIST](state,buyList){
+        state.buyList = buyList
+        console.log(buyList)
+    },
+    [SAVE_PUBULIST](state,data){
+        state.data = data
+        console.log(data)
+    },
  }
 
  

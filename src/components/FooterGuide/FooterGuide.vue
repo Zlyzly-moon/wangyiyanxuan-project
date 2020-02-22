@@ -20,7 +20,7 @@
          <span>购物车</span>
      </div>
      <div :class="{active:$route.path === '/profile'}"
-@click="goPath('/profile')" class="footerItem">
+@click="goPath('/phone')" class="footerItem">
        <i class="iconfont icon-tubiao-"></i>
          <span>个人</span>
      </div>

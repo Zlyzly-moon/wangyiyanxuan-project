@@ -22,3 +22,33 @@ export const getCateList = () => ajax({
 })
 
 
+/* 手机号验证码登陆 */
+export const loginWithPhone = ({phone, code}) => ajax({
+    url: '/login_sms',
+    method: 'POST',
+    data: {
+      phone,
+      code
+    }
+  })
+
+
+  export const sendCode = ({phone}) => ajax({
+    url: '/sendcode',
+    params: {
+      phone
+    }
+  })
+
+
+// 值得买 轮播图数据\
+export const getBuyList = ()=>ajax({
+  url:'/buyList',
+  method:'GET'
+})
+
+// 瀑布流数据
+export const getPuBuList = ()=>ajax({
+  url:'/pubuList',
+  method:'GET'
+})

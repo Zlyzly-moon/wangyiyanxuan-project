@@ -6,6 +6,8 @@ import ShopCart from '../pages/ShopCart/ShopCart.vue'
 import SearchList from '../pages/SearchList/SearchList.vue'
 import Login from '../pages/Login/Login.vue'
 import Email from '../pages/Email/Email.vue'
+import Phone from '../pages/Phone/Phone.vue'
+import Live from '../pages/Live/Live.vue'
 
 export default [
     {
@@ -32,6 +34,9 @@ export default [
     {
         path:'/profile',
         component:Profile,
+        meta: {
+            isShowFooter:true
+        }
     },
     {
         path:'/shopcart',
@@ -51,6 +56,14 @@ export default [
     {
         path: '/email',
         component: Email,
+    },
+    {
+        path: '/phone',
+        component: Phone,
+    },
+    {
+        path: '/live',
+        component: Live,
     },
     {
         path:'/',
